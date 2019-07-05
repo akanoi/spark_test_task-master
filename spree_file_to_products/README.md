@@ -1,13 +1,13 @@
-SpreeFileToProducts
+File To Products
 ===================
 
-Introduction goes here.
+The extension adds the ability to load products from a file to the admin panel (only csv format is currently supported).
 
 ## Installation
 
 1. Add this extension to your Gemfile with this line:
   ```ruby
-  gem 'spree_file_to_products', github: '[your-github-handle]/spree_file_to_products'
+  gem 'spree_file_to_products', github: 'spark_test_task-master/spree_file_to_products'
   ```
 
 2. Install the gem using Bundler:
