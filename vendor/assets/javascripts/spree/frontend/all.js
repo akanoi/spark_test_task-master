@@ -10,3 +10,4 @@
 //= require spree/frontend
 
 //= require_tree .
+//= require spree/frontend/spree_file_to_products
