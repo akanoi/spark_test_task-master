@@ -2,4 +2,5 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  spree:
+    upload_products_from_file: 'Upload products from file'
