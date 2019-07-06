@@ -10,10 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171204122814) do
+ActiveRecord::Schema.define(version: 2019_07_06_155531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
@@ -129,7 +150,9 @@ ActiveRecord::Schema.define(version: 20171204122814) do
     t.integer "user_id"
     t.integer "payment_method_id"
     t.boolean "default", default: false, null: false
+    t.datetime "deleted_at"
     t.index ["address_id"], name: "index_spree_credit_cards_on_address_id"
+    t.index ["deleted_at"], name: "index_spree_credit_cards_on_deleted_at"
     t.index ["payment_method_id"], name: "index_spree_credit_cards_on_payment_method_id"
     t.index ["user_id"], name: "index_spree_credit_cards_on_user_id"
   end
@@ -205,6 +228,47 @@ ActiveRecord::Schema.define(version: 20171204122814) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["source_id", "source_type"], name: "index_spree_log_entries_on_source_id_and_source_type"
+  end
+
+  create_table "spree_oauth_access_grants", force: :cascade do |t|
+    t.integer "resource_owner_id", null: false
+    t.bigint "application_id", null: false
+    t.string "token", null: false
+    t.integer "expires_in", null: false
+    t.text "redirect_uri", null: false
+    t.datetime "created_at", null: false
+    t.datetime "revoked_at"
+    t.string "scopes"
+    t.index ["application_id"], name: "index_spree_oauth_access_grants_on_application_id"
+    t.index ["token"], name: "index_spree_oauth_access_grants_on_token", unique: true
+  end
+
+  create_table "spree_oauth_access_tokens", force: :cascade do |t|
+    t.integer "resource_owner_id"
+    t.bigint "application_id"
+    t.string "token", null: false
+    t.string "refresh_token"
+    t.integer "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at", null: false
+    t.string "scopes"
+    t.string "previous_refresh_token", default: "", null: false
+    t.index ["application_id"], name: "index_spree_oauth_access_tokens_on_application_id"
+    t.index ["refresh_token"], name: "index_spree_oauth_access_tokens_on_refresh_token", unique: true
+    t.index ["resource_owner_id"], name: "index_spree_oauth_access_tokens_on_resource_owner_id"
+    t.index ["token"], name: "index_spree_oauth_access_tokens_on_token", unique: true
+  end
+
+  create_table "spree_oauth_applications", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "uid", null: false
+    t.string "secret", null: false
+    t.text "redirect_uri", null: false
+    t.string "scopes", default: "", null: false
+    t.boolean "confidential", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid"], name: "index_spree_oauth_applications_on_uid", unique: true
   end
 
   create_table "spree_option_type_prototypes", force: :cascade do |t|
@@ -283,7 +347,7 @@ ActiveRecord::Schema.define(version: 20171204122814) do
     t.datetime "approved_at"
     t.boolean "confirmation_delivered", default: false
     t.boolean "considered_risky", default: false
-    t.string "guest_token"
+    t.string "token"
     t.datetime "canceled_at"
     t.integer "canceler_id"
     t.integer "store_id"
@@ -297,10 +361,10 @@ ActiveRecord::Schema.define(version: 20171204122814) do
     t.index ["confirmation_delivered"], name: "index_spree_orders_on_confirmation_delivered"
     t.index ["considered_risky"], name: "index_spree_orders_on_considered_risky"
     t.index ["created_by_id"], name: "index_spree_orders_on_created_by_id"
-    t.index ["guest_token"], name: "index_spree_orders_on_guest_token"
     t.index ["number"], name: "index_spree_orders_on_number", unique: true
     t.index ["ship_address_id"], name: "index_spree_orders_on_ship_address_id"
     t.index ["store_id"], name: "index_spree_orders_on_store_id"
+    t.index ["token"], name: "index_spree_orders_on_token"
     t.index ["user_id", "created_by_id"], name: "index_spree_orders_on_user_id_and_created_by_id"
   end
 
@@ -360,6 +424,8 @@ ActiveRecord::Schema.define(version: 20171204122814) do
     t.decimal "amount", precision: 10, scale: 2
     t.string "currency"
     t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_spree_prices_on_deleted_at"
     t.index ["variant_id", "currency"], name: "index_spree_prices_on_variant_id_and_currency"
     t.index ["variant_id"], name: "index_spree_prices_on_variant_id"
@@ -496,7 +562,7 @@ ActiveRecord::Schema.define(version: 20171204122814) do
     t.datetime "updated_at", null: false
     t.integer "promotion_category_id"
     t.index ["advertise"], name: "index_spree_promotions_on_advertise"
-    t.index ["code"], name: "index_spree_promotions_on_code"
+    t.index ["code"], name: "index_spree_promotions_on_code", unique: true
     t.index ["expires_at"], name: "index_spree_promotions_on_expires_at"
     t.index ["id", "type"], name: "index_spree_promotions_on_id_and_type"
     t.index ["promotion_category_id"], name: "index_spree_promotions_on_promotion_category_id"
@@ -947,10 +1013,6 @@ ActiveRecord::Schema.define(version: 20171204122814) do
     t.integer "taxonomy_id"
     t.integer "lft"
     t.integer "rgt"
-    t.string "icon_file_name"
-    t.string "icon_content_type"
-    t.integer "icon_file_size"
-    t.datetime "icon_updated_at"
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1062,4 +1124,7 @@ ActiveRecord::Schema.define(version: 20171204122814) do
     t.index ["kind"], name: "index_spree_zones_on_kind"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "spree_oauth_access_grants", "spree_oauth_applications", column: "application_id"
+  add_foreign_key "spree_oauth_access_tokens", "spree_oauth_applications", column: "application_id"
 end
