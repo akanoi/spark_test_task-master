@@ -35,11 +35,6 @@ gem 'spree', '~> 3.7.0'
 gem 'spree_auth_devise', '~> 3.5'
 gem 'spree_gateway', '~> 3.4'
 
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-end
-
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
@@ -50,9 +45,15 @@ group :test, :development do
   gem 'rubocop', '~> 0.60.0', require: false
   gem 'rubocop-rspec', require: false
   gem 'pry-byebug'
+  gem 'rspec-rails', '~> 3.8'
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'spree_file_to_products', path: 'spree_file_to_products'
+
+gem 'smarter_csv'
+gem 'sidekiq'
+gem 'sidekiq-status'
