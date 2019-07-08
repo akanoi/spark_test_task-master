@@ -4,3 +4,11 @@
 en:
   spree:
     upload_products_from_file: 'Upload products from file'
+    unsupported_file_type: 'Unsupported file type. We support %{types} types'
+    products_file_not_found: 'Products file not found'
+    success_operation: 'Operation success'
+    product_uploading_result: 'Loaded %{good} products. Rejected %{bad} products. %{error}'
+    product_uploading_started: 'Uploading started. Reload page after a couple of seconds'
+    product_uploading_in_process: 'Uploading in process. Reload page after a couple of seconds'
+    valid_products_file: 'Validation of file passed'
+    file_with_products: 'File type must be one of: %{types}'

@@ -3,6 +3,7 @@ Spree::Core::Engine.add_routes do
     resources :products do
       collection do
         get :upload_products_from_file
+        post :upload_products_from_file
       end
     end
   end

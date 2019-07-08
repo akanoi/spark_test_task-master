@@ -1,0 +1,13 @@
+<script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.filestyle/1.1.0/js/bootstrap-filestyle.min.js"> </script>
+
+<% content_for :page_title do %>
+  <%= link_to Spree.t(:products), spree.admin_products_url %> /
+  <%= Spree.t(:upload_products_from_file) %>
+<% end %>
+
+<%= form_for :products, html: { multipart: true } do |f| %>
+  <%= f.file_field :products_file, multiple: false, accept: Constants::FileToProductsConstants::SUPPORTED_FILE_TYPES.join(','), class: 'filestyle', id: 'products-file' %>
+  <%= f.label Spree.t(:file_with_products, types: Constants::FileToProductsConstants::SUPPORTED_FILE_TYPES.join(',')), for: 'products-file' %>
+
+  <%= render partial: 'spree/admin/shared/new_resource_links' %>
+<% end %>
