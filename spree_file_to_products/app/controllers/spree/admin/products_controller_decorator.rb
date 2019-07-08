@@ -55,7 +55,6 @@ module SpreeFileToProducts
       def products_file
         params.dig(:products, :products_file)
       end
-
     end
   end
 end

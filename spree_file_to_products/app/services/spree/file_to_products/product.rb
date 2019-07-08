@@ -1,6 +1,8 @@
 module Spree
   module FileToProducts
     class Product
+      include Constants::FileToProductsConstants
+
       FILE_ATTRS_TO_RENAME = {
         availability_date: :available_on,
       }.freeze
