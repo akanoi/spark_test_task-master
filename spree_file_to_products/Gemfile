@@ -10,12 +10,13 @@ gem 'sidekiq'
 gem 'sidekiq-status'
 
 group :test do
-  require 'ffaker'
+  gem 'ffaker'
   gem 'factory_bot'
 end
 
 group :development do
   gem 'pry-byebug'
+  gem 'listen', '>= 3.0.5', '< 3.2'
 end
 
 gemspec
