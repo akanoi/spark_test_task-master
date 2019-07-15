@@ -8,23 +8,24 @@
     <%= render partial: 'spree/shared/head' %>
   </head>
   <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-hook="body">
-    <%= render partial: 'spree/shared/google_analytics.js' %>
-    <%= render partial: 'spree/shared/trackers/segment/initializer.js' %>
-    <%= render partial: 'spree/shared/header' %>
+  <%= render partial: 'spree/shared/header' %>
 
-    <div class="container">
-      <div class="row" data-hook>
-        <%= breadcrumbs(@taxon) %>
+  <div class="container">
+    <div class="row" data-hook>
+      <%= spree_breadcrumbs(@taxon) %>
 
-        <%= render partial: 'spree/shared/sidebar' if content_for? :sidebar %>
+      <%= render partial: 'spree/shared/sidebar' if content_for? :sidebar %>
 
-        <div id="content" class="<%= !content_for?(:sidebar) ? "col-sm-12" : "col-sm-8 col-md-9" %>" data-hook>
-          <%= flash_messages %>
-          <%= yield %>
-        </div>
+      <main
+        id="content"
+        class="mt-4 <%= !content_for?(:sidebar) ? "col-sm-12" : "col-sm-12 col-md-9" %>"
+        data-hook>
+        <%= flash_messages %>
+        <%= yield %>
+      </main>
 
-        <%= yield :templates %>
-      </div>
+      <%= yield :templates %>
     </div>
+  </div>
   </body>
 </html>
