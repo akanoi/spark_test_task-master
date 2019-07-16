@@ -2,9 +2,9 @@
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 
-require File.expand_path('../dummy/config/environment.rb', __FILE__)
+require File.expand_path('dummy/config/environment.rb', __dir__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 require 'database_cleaner'
 require 'ffaker'
@@ -43,15 +43,15 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  config.before :each do
+  config.before do
     DatabaseCleaner.strategy = RSpec.current_example.metadata[:js] ? :truncation : :transaction
     DatabaseCleaner.start
   end
 
   # After each spec clean the database.
-  config.after :each do
+  config.after do
     DatabaseCleaner.clean
   end
 
-  config.order = "random"
+  config.order = 'random'
 end

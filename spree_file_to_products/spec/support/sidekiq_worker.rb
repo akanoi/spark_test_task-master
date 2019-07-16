@@ -7,7 +7,6 @@ RSpec.configure do |config|
 
     Sidekiq::Worker.clear_all
   end
-  config.before(:each) do
-
+  config.before do
   end
 end
