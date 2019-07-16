@@ -31,6 +31,11 @@ First bundle your dependencies, then run `rake`. `rake` will default to building
 ```shell
 bundle
 bundle exec rake
+
+rake test_app
+
+cd spec/dummy
+rake db:schema:load
 ```
 
 When testing your applications integration with this extension you may use it's factories.
