@@ -1,8 +1,6 @@
 module Spree
   module FileToProducts
     class Product
-      include Constants::FileToProductsConstants
-
       FILE_ATTRS_TO_RENAME = {
         availability_date: :available_on,
       }.freeze
@@ -24,9 +22,9 @@ module Spree
 
         update_total_stock!
 
-        { SUCCESS_STATUS => Spree.t(:success_operation) }
+        { success: Spree.t(:success_operation) }
       rescue StandardError => e
-        { ERROR_STATUS => e.message }
+        { error: e.message }
       end
 
       private

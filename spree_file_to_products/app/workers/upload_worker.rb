@@ -4,8 +4,6 @@ class UploadWorker
   include Sidekiq::Worker
   include Sidekiq::Status::Worker
 
-  include Constants::FileToProductsConstants
-
   sidekiq_options retry: false
 
   def perform(job_id)

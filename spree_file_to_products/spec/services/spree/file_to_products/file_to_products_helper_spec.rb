@@ -20,7 +20,7 @@ RSpec.describe Spree::FileToProducts::FileToProductsHelper do
       result = subject.class.file_validation('/tmp/bad_type_file.txt', 'text')
       File.delete('/tmp/bad_type_file.txt')
 
-      expect(result.values.first).to eql(Spree.t(:unsupported_file_type, types: SUPPORTED_FILE_TYPES.join(', ')))
+      expect(result.values.first).to eql(Spree.t(:unsupported_file_type, types: Spree::FileToProducts::ProductsUploader::SUPPORTED_FILE_TYPES.join(', ')))
     end
 
     it 'is pass if file good' do

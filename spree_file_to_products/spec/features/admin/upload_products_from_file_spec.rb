@@ -24,7 +24,7 @@ RSpec.describe 'Upload Products from file', type: :feature, js: true do
         find_button(class: /btn-success/).click
 
         page.has_current_path?(spree.upload_products_from_file_admin_products_path) && \
-          expect(page).to(have_content(Spree.t(:unsupported_file_type, types: SUPPORTED_FILE_TYPES.join(', '))))
+          expect(page).to(have_content(Spree.t(:unsupported_file_type, types: Spree::FileToProducts::ProductsUploader::SUPPORTED_FILE_TYPES.join(', '))))
       end
     end
   end

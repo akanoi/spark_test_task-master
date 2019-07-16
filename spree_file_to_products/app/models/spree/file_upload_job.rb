@@ -1,7 +1,5 @@
 module Spree
   class FileUploadJob < ApplicationRecord
-    include Constants::FileToProductsConstants
-
     has_one_attached :products_file
 
     enum status: { active: 0, success: 1, error: 2 }
@@ -12,7 +10,7 @@ module Spree
       job = new
 
       validation = Spree::FileToProducts::FileToProductsHelper.file_validation(file.tempfile, file.content_type)
-      return validation if validation[ERROR_STATUS]
+      return validation if validation[:error]
 
       job.products_file.attach(file)
 

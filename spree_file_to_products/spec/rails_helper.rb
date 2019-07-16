@@ -10,8 +10,6 @@ require 'database_cleaner'
 require 'ffaker'
 # Add additional requires below this line. Rails is not loaded until this point!
 
-include Constants::FileToProductsConstants
-
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|

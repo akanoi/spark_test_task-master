@@ -4,16 +4,17 @@ module Spree
       require 'smarter_csv'
 
       class CSVParser
-        include Constants::FileToProductsConstants
+        CSV_FILE_SEPARATOR = ';'.freeze
+        REQUIRED_PRODUCT_FIELDS = %i[name price category].freeze
 
         attr_reader :products
 
         def parse(file)
           @products = SmarterCSV.process(file, options)
 
-          { SUCCESS_STATUS => Spree.t(:success_operation) }
+          { success: Spree.t(:success_operation) }
         rescue StandardError => e
-          { ERROR_STATUS => e.message }
+          { error: e.message }
         end
 
         def options

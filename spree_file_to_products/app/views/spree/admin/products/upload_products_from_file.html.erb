@@ -6,8 +6,8 @@
 <% end %>
 
 <%= form_for :products, html: { multipart: true } do |f| %>
-  <%= f.file_field :products_file, multiple: false, accept: Constants::FileToProductsConstants::SUPPORTED_FILE_TYPES.join(','), class: 'filestyle', id: 'products-file' %>
-  <%= f.label Spree.t(:file_with_products, types: Constants::FileToProductsConstants::SUPPORTED_FILE_TYPES.join(',')), for: 'products-file' %>
+  <%= f.file_field :products_file, multiple: false, accept: Spree::FileToProducts::ProductsUploader::SUPPORTED_FILE_TYPES.join(','), class: 'filestyle', id: 'products-file' %>
+  <%= f.label Spree.t(:file_with_products, types: Spree::FileToProducts::ProductsUploader::SUPPORTED_FILE_TYPES.join(',')), for: 'products-file' %>
 
   <%= render partial: 'spree/admin/shared/new_resource_links' %>
 <% end %>

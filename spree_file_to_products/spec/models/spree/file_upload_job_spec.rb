@@ -18,7 +18,7 @@ RSpec.describe Spree::FileUploadJob, type: :model do
   it 'is bad validation for bad file' do
     validation = subject.class.new_job(bad_file)
 
-    expect(validation.values.first).to eql(Spree.t(:unsupported_file_type, types: SUPPORTED_FILE_TYPES.join(', ')))
+    expect(validation.values.first).to eql(Spree.t(:unsupported_file_type, types: Spree::FileToProducts::ProductsUploader::SUPPORTED_FILE_TYPES.join(', ')))
   end
 
   it 'is perform async job' do

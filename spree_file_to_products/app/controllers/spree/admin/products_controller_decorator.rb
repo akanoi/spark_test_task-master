@@ -1,19 +1,17 @@
 module SpreeFileToProducts
   module Admin
     module ProductsControllerDecorator
-      include Constants::FileToProductsConstants
-
       def upload_products_from_file
         if products_file_present?
           creating_job_id = Spree::FileUploadJob.new_job(products_file)
           unless creating_job_id.is_a?(Integer)
-            flash.now[ERROR_STATUS] = creating_job_id[ERROR_STATUS]
+            flash.now[:error] = creating_job_id[:error]
             return
           end
 
           session[:upload_job_id] = creating_job_id
 
-          redirect_to admin_products_path, flash: { SUCCESS_STATUS => Spree.t(:product_uploading_started) }
+          redirect_to admin_products_path, flash: { success: Spree.t(:product_uploading_started) }
         end
       end
 
