@@ -1,5 +1,5 @@
 ENV['TMP'] = File.join(File.dirname(__FILE__), '../../storage/tmp')
-Dir.mkdir(ENV['TMP']) unless Dir.exist?(ENV['TMP'])
+FileUtils.mkdir_p(ENV['TMP']) unless Dir.exist?(ENV['TMP'])
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
