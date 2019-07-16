@@ -15,7 +15,7 @@ RSpec.describe 'Upload Products from file', type: :feature, js: true do
         attach_file(File.join(fixture_path, 'products_with_empty_lines.csv'))
         find_button(class: /btn-success/).click
 
-        expect(page.current_path).to(eql(spree.admin_products_path)) && \
+        page.has_current_path?(spree.admin_products_path) && \
           expect(page).to(have_content(Spree.t(:product_uploading_in_process)))
       end
 
@@ -23,7 +23,7 @@ RSpec.describe 'Upload Products from file', type: :feature, js: true do
         attach_file(File.join(fixture_path, 'bad_file_type.txt'))
         find_button(class: /btn-success/).click
 
-        expect(page.current_path).to(eql(spree.upload_products_from_file_admin_products_path)) && \
+        page.has_current_path?(spree.upload_products_from_file_admin_products_path) && \
           expect(page).to(have_content(Spree.t(:unsupported_file_type, types: SUPPORTED_FILE_TYPES.join(', '))))
       end
     end
