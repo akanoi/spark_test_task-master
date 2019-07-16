@@ -30,5 +30,12 @@ RSpec.describe Spree::FileToProducts::FileToProductsHelper do
 
       expect(result.values.first).to eql(Spree.t(:valid_products_file))
     end
+
+    it 'should be add to raw sting readline method' do
+      raw_string = File.read(File.join(fixture_path, 'products_with_empty_lines.csv'))
+      prepared_string = subject.class.prepare_file(raw_string)
+
+      expect(prepared_string).to respond_to(:readline)
+    end
   end
 end

@@ -20,6 +20,10 @@ module Spree
 
         { SUCCESS_STATUS => Spree.t(:valid_products_file) }
       end
+
+      def self.prepare_file(file)
+        file.is_a?(String) ? StringIO.new(file) : file
+      end
     end
   end
 end
