@@ -1,6 +1,6 @@
 ## Dependencies
 `ruby 2.5.3`
-`rails 5.1.7`
+`rails 5.2`
 ## Deployment instructions
 1. Start Redis Server
 `redis-server`
