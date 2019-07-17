@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_15_231002) do
+ActiveRecord::Schema.define(version: 2019_07_17_104012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,14 +34,6 @@ ActiveRecord::Schema.define(version: 2019_07_15_231002) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
-  end
-
-  create_table "file_upload_jobs", force: :cascade do |t|
-    t.integer "status", default: 0
-    t.string "msg"
-    t.string "worker_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -172,6 +164,14 @@ ActiveRecord::Schema.define(version: 2019_07_15_231002) do
     t.datetime "updated_at", null: false
     t.index ["number"], name: "index_spree_customer_returns_on_number", unique: true
     t.index ["stock_location_id"], name: "index_spree_customer_returns_on_stock_location_id"
+  end
+
+  create_table "spree_file_upload_jobs", force: :cascade do |t|
+    t.integer "status", default: 0
+    t.string "msg"
+    t.string "worker_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "spree_gateways", id: :serial, force: :cascade do |t|
