@@ -22,7 +22,7 @@ module Spree
         finally_status = good.any? ? :success : :error
 
         {
-          finally_status => Spree.t(:product_uploading_result, good: good.count, bad: bad.count, error: (bad.first || {})[:msg])
+          finally_status => Spree.t(:product_uploading_result, good: good.count, bad: bad.count, error: (bad.first || {})[:error])
         }
       end
     end
