@@ -1,6 +1,11 @@
 module SpreeFileToProducts
   module Admin
     module ProductsControllerDecorator
+
+      def self.prepended(base)
+        base.before_action :check_file_upload, only: :index
+      end
+
       def upload_products_from_file
         if products_file_present?
           creating_job_id = Spree::FileUploadJob.new_job(products_file)
@@ -15,16 +20,16 @@ module SpreeFileToProducts
         end
       end
 
-      def index
-        session[:return_to] = request.url
+      private
 
+      def check_file_upload
         job = begin
-                Spree::FileUploadJob.find(session[:upload_job_id])
-              rescue ActiveRecord::RecordNotFound => _error
-                nil
-              end
+          Spree::FileUploadJob.find(session[:upload_job_id])
+        rescue ActiveRecord::RecordNotFound => _error
+          nil
+        end
 
-        if job && job.status == 'active'
+        if job&.status == 'active'
           flash.now[:notice] = Spree.t(:product_uploading_in_process)
         elsif job
           session[:upload_job_id] = nil
@@ -36,11 +41,7 @@ module SpreeFileToProducts
 
           return
         end
-
-        respond_with(@collection)
       end
-
-      private
 
       def products_file
         params.dig(:products, :products_file)
