@@ -14,13 +14,15 @@ module Spree
 
       def save
         prepare_product_info!
-
         @product.assign_attributes(@product_info.reject { |attr| FILE_ATTRS_TO_REJECT.include?(attr) })
-        update_taxons_categories!
 
-        @product.save!
+        ActiveRecord::Base.transaction do
+          update_taxons_categories!
 
-        update_total_stock!
+          @product.save!
+
+          update_total_stock!
+        end
 
         { success: Spree.t(:success_operation) }
       rescue StandardError => e
